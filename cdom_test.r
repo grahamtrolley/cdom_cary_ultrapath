@@ -58,7 +58,7 @@ s_275_295 <- function(x, y) {
   wl_275_295 <- seq(from = 275, to = 295, length.out = 25)
   data_275_295 <- sf(wl_275_295)
   slope_275_295 <- coef(lm(log(data_275_295) ~ wl_275_295))[2]
-  
+
   return(slope_275_295)
 }
 
@@ -70,14 +70,23 @@ for (i in 1:rowlen) {
   #print(df_r$cruise[i])
   x = df_r$Cary_data[i][[1]]$wavelength
   y = unlist(df_r$Cary_data[i][[1]]$ag)
-  fit <- cdom_fit_exponential(wl = x, absorbance = y, wl0 = 275,startwl = 275, endwl = 295)
-  S=fit$params$estimate[1]
+  #fit <- cdom_fit_exponential(wl = x, absorbance = y, wl0 = 275,startwl = 275, endwl = 295)
+  #S=fit$params$estimate[1]
+  
+  S <- tryCatch(
+    {
+      fit <- cdom_fit_exponential(wl = x, absorbance = y, wl0 = 275, startwl = 275, endwl = 295)
+      fit$params$estimate[1]
+    },
+    error = function(e) NA
+  )
+  
   #S_list <- append(S_list, S)
   
   print(S)
-  print(s_275_295(x,y))
-  S_list <- append(S_list, -s_275_295(x,y))
-  
+  #print(s_275_295(x,y))
+  #S_list <- append(S_list, -s_275_295(x,y))
+  S_list <- append(S_list, S)
 }
 S_list = unlist(S_list)
 
@@ -120,3 +129,4 @@ ggplot(df, aes(x = values)) +
 df <- data.frame(column_name = S_list)
 # Write to CSV
 write.csv(df, "cary_s275_295.csv", row.names = FALSE)
+
