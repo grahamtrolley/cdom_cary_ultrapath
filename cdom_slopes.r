@@ -1,44 +1,22 @@
+
+# Script to calculate CDOM spectral slope using exponentia fit from 
+# the R "cdom" package
+#https://github.com/PMassicotte/cdom
+
+# returns a histogram of values, and saves values as a csv to load back into 
+# python for plotting
+
+
 # Load the cdom library
 library(cdom)
 library(ggplot2)
 
-# data("spectra")
-# 
-# fit <- cdom_fit_exponential(wl = spectra$wavelength,
-#                         absorbance = spectra$spc3,
-#                         wl0 = 275,
-#                         startwl = 275,
-#                         endwl = 295)
-# 
-# 
-# ##          S          K         a0
-# ## 0.02220677 1.85125099 6.02460455
-# 
-# 
-# x_vals <- unlist(fit$data[,"x"])
-# y_vals <- unlist(fit$data[,".fitted"])
-# y2_vals <-  unlist(fit$data[,"y"])
-# 
-# # First plot establishes the plotting area
-# plot(spectra$wavelength, spectra$spc3,
-#      type = "p",
-#      col = "blue",
-#      xlab = "Wavelength (nm)",
-#      ylab = "Absorbance",
-#      main = "CDOM Data and Fit")
-# 
-# 
-# points(x_vals, y2_vals, type = "p")
-# 
-# lines(x_vals, y_vals, type = "l", col='red', lwd=2)
-# 
-# print(fit$param$estimate[1])# prints S value
 
 # Install and load reticulate and pandas if you haven't already
 # install.packages("reticulate")
-py_install("pandas")
-library(reticulate)
 
+library(reticulate)
+py_install("pandas")
 # Load pandas in R
 pd <- import("pandas")
 
@@ -50,7 +28,7 @@ df_r <- py_to_r(df)
 
 rowlen = dim(df_r)[1]
 
-# Set up s_275_295 function, by taking relevant code from slope_ratio.R
+# Set up s_275_295 log fit linear function, by taking relevant code from slope_ratio.R
 # function in the CDOM R package, https://github.com/PMassicotte/cdom
 
 s_275_295 <- function(x, y) {
@@ -62,8 +40,7 @@ s_275_295 <- function(x, y) {
   return(slope_275_295)
 }
 
-
-
+#iterate through dataframe ad calculate S275:295
 S_list <- list()
 for (i in 1:rowlen) {
   print(i)
@@ -72,7 +49,7 @@ for (i in 1:rowlen) {
   y = unlist(df_r$Cary_data[i][[1]]$ag)
   #fit <- cdom_fit_exponential(wl = x, absorbance = y, wl0 = 275,startwl = 275, endwl = 295)
   #S=fit$params$estimate[1]
-  
+
   S <- tryCatch(
     {
       fit <- cdom_fit_exponential(wl = x, absorbance = y, wl0 = 275, startwl = 275, endwl = 295)
@@ -80,19 +57,15 @@ for (i in 1:rowlen) {
     },
     error = function(e) NA
   )
-  
+
   #S_list <- append(S_list, S)
-  
+
   print(S)
   #print(s_275_295(x,y))
   #S_list <- append(S_list, -s_275_295(x,y))
   S_list <- append(S_list, S)
 }
 S_list = unlist(S_list)
-
-s_275_295(x,y)
-
-
 
 
 ### code to make histogram ###
