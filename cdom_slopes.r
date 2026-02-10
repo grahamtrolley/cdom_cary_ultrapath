@@ -21,34 +21,34 @@ py_install("pandas")
 pd <- import("pandas")
 
 # Read the pickle file
-df <- pd$read_pickle("cary_ultrapath_paired_measurements.pkl")
+df <- pd$read_pickle("cary_data_only.pkl")
 
 # Convert to R data frame if needed
 df_r <- py_to_r(df)
+#df_r <- py_to_r(pd$read_pickle("cary_ultrapath_paired_measurements.pkl"))
+#df_r <- as.data.frame(df_r, stringsAsFactors = FALSE)
 
-rowlen = dim(df_r)[1]
+rowlen = length(df_r)
 
 # Set up s_275_295 log fit linear function, by taking relevant code from slope_ratio.R
 # function in the CDOM R package, https://github.com/PMassicotte/cdom
 
-s_275_295 <- function(x, y) {
-  sf <- splinefun(x, y)
-  wl_275_295 <- seq(from = 275, to = 295, length.out = 25)
-  data_275_295 <- sf(wl_275_295)
-  slope_275_295 <- coef(lm(log(data_275_295) ~ wl_275_295))[2]
-
-  return(slope_275_295)
-}
+# s_275_295 <- function(x, y) {
+#   sf <- splinefun(x, y)
+#   wl_275_295 <- seq(from = 275, to = 295, length.out = 25)
+#   data_275_295 <- sf(wl_275_295)
+#   slope_275_295 <- coef(lm(log(data_275_295) ~ wl_275_295))[2]
+# 
+#   return(slope_275_295)
+# }
 
 #iterate through dataframe ad calculate S275:295
 S_list <- list()
-for (i in 1:rowlen) {
+for (i in 0:rowlen) {
   print(i)
   #print(df_r$cruise[i])
-  x = df_r$Cary_data[i][[1]]$wavelength
-  y = unlist(df_r$Cary_data[i][[1]]$ag)
-  #fit <- cdom_fit_exponential(wl = x, absorbance = y, wl0 = 275,startwl = 275, endwl = 295)
-  #S=fit$params$estimate[1]
+  x = df_r[i]$wavelength
+  y = unlist(df_r[i]$ag)
 
   S <- tryCatch(
     {
@@ -75,9 +75,9 @@ library(ggplot2)
 df <- data.frame(values = S_list)
 
 # Calculate quartiles
-q1 <- quantile(S_list, 0.25)
-q2 <- median(S_list)
-q3 <- quantile(S_list, 0.75)
+q1 <- quantile(S_list, 0.25, na.rm = TRUE)
+q2 <- median(S_list, na.rm = TRUE)
+q3 <- quantile(S_list, 0.75, na.rm = TRUE)
 
 # Get max count for positioning
 max_count <- max(hist(S_list, plot = FALSE)$counts)
