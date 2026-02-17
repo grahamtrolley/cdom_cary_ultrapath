@@ -1,21 +1,44 @@
 # CDOM Cary Ultrapath Merge Project:
 
-Respository to organize code/data for Trolley et al. CDOM manuscript
+Repository to organize code & data for Trolley et al. 2026 CDOM manuscript  
+**Python version:** 3.13.5  
+**R version:** 4.5.1
 
-## Data Access and Processing Script:
 
-The main code here is in ag_merge_code_trolley_et_al.ipynb. This jupyter notebook downloads and/or loads in all the relevant cdom data, and processes it for the merge approaches discussed in the paper, and produces all the figures delivered in the paper
+## Quick Start
 
-The only exception is that the derivation of S275:295 is conducted in the included r script (using the "cdom" package in R), and the results are saved to csv and opened in the .ipynb file for plotting. This decision was made due to the superior documentation of the "cdom" package in r versus python equivalents. S275:295 is only used in the analysis for the one dataset summary plot, so users may opt to skip that cell if they don't have the cabability to run R code.
+1. Clone this repository
+2. Choose your data access method (see below)
+3. Run `ag_merge_code_trolley_et_al.ipynb`
+4. Run the R script for S275:295 derivation
 
-### Data Access Nuance
+## Main Analysis
+
+**Primary notebook:** `ag_merge_code_trolley_et_al.ipynb`
+
+This Jupyter notebook:
+- Downloads/loads CDOM data from paired Cary-Ultrapath measurements
+- Implements merge approaches (value threshold and percent difference methods, as described in the manuscript)
+- Generates all figures from the manuscript
+
+**R script:** `cdom_slopes.r`
+
+- Derives S275:295 using the `cdom` R package
+- Exports results to CSV for use in the main notebook
+- **Note:** The derived S275:295 values are only used for the dataset summary plot (Fig. 5)
+
+
+## Data Access Options
 
 The CDOM data are available through 2 methods
 
-#### Method 1:
+### Method 1:
 
 The first data access method uses the provided NASA SeaBASS links along with your systems earthdata credentials saved in your .netrc file to directly download all relevant cdom files from SeaBASS automatically. This is the preferred method since you have the full files available to reference, but this approach is less beginner friendly as it requires you to have set up earthdata .netrc credentials
 
-#### Method 2: 
-The second data access method is to access the pre-configured paired cary-ultrapath measurements via the file in this repository: cary_ultrapath_paired_measurements.pkl. This file was created by the authors using the above approach, so we've made it available to make the dataset easier to jump right into for users/researchers who aren't interested in downloading all 2000+ seabass files. 
+#### Optional: NASA Earthdata Credentials
+For direct data download from SeaBASS, configure your `.netrc` file with Earthdata credentials. See [NASA Earthdata Login Setup](https://urs.earthdata.nasa.gov/documentation/for_users/data_access/create_net_rc_file).
 
+
+### Method 2: 
+The second data access method is to access the pre-configured paired cary-ultrapath measurements via the file in this repository: cary_ultrapath_paired_measurements.pkl. This file was created by the authors using the above approach, so we've made it available to make the dataset easier to jump right into for users/researchers who aren't interested in downloading all 2000+ seabass files. 
