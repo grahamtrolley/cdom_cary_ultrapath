@@ -1,6 +1,7 @@
-# CDOM Cary Ultrapath Merge Project
+# CDOM Cary-100 & Ultrapath Measurement Merge Project
 
 Repository to organize code & data for Trolley et al. 2026 Colored Dissolved Organic Matter (CDOM) manuscript. 
+
 This project combines CDOM absorption spectra of the same sample measured on two different benchtop spectrophotometers that have different but overlapping spectral ranges. The merged product has values over a wider wavelength range than the input spectra, and is designed to leverage the measurements from each instrument based on the spectral ranges each are most suited to. For a more detailed explanantion of the approach, please see the manuscript.
 
 **Python version:** 3.13.5  
