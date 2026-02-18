@@ -1,8 +1,8 @@
 # CDOM Cary-100 & Ultrapath Measurement Merge Project
 
-Repository to organize code & data for the paper: An Approach for Merging Colored Dissolved Organic Matter Absorption Measurements from Complementary Benchtop Spectrometers; Trolley et al. 2026
+Repository to organize code & data for the paper: An Approach for Merging Colored Dissolved Organic Matter Absorption Measurements from Complementary Benchtop Spectrometers; Trolley et al. 2026.
 
-This project combines CDOM absorption spectra of the same sample measured on two different benchtop spectrophotometers that have different but overlapping spectral ranges. The approach is generalizable, but the dataset here uses mesurements from the long-pathlength WPI Ultrapath and the short-pathlength Agilent Cary-100 spectrophotometers. The merged product has values over a wider wavelength range than the input spectra, and is designed to leverage the measurements from each instrument based on the spectral range to which each is most suited. For a more detailed explanation of the approach, please see the manuscript.
+This project combines CDOM absorption spectra of the same sample measured on two different benchtop spectrophotometers that have different but overlapping spectral ranges. The dataset here uses measurements from the long-pathlength WPI Ultrapath and the short-pathlength Agilent Cary-100 spectrophotometers, though the approach is generalizable for different instruments. The merged product has values over a wider wavelength range than the input spectra, and is designed to leverage the measurements from each instrument based on the spectral range to which each is most suited. For a more detailed explanation of the approach, please see the manuscript.
 
 **Python version:** 3.13.5  
 **R version:** 4.5.1
