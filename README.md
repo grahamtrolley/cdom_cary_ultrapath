@@ -1,6 +1,8 @@
-# CDOM Cary Ultrapath Merge Project:
+# CDOM Cary Ultrapath Merge Project
 
-Repository to organize code & data for Trolley et al. 2026 CDOM manuscript  
+Repository to organize code & data for Trolley et al. 2026 Colored Dissolved Organic Matter (CDOM) manuscript. 
+This project combines CDOM absorption spectra of the same sample measured on two different benchtop spectrophotometers that have different but overlapping spectral ranges. The merged product has values over a wider wavelength range than the input spectra, and is designed to leverage the measurements from each instrument based on the spectral ranges each are most suited to. For a more detailed explanantion of the approach, please see the manuscript.
+
 **Python version:** 3.13.5  
 **R version:** 4.5.1
 
@@ -14,10 +16,9 @@ Repository to organize code & data for Trolley et al. 2026 CDOM manuscript
 
 ## Main Analysis
 
-**Primary notebook:** `ag_merge_code_trolley_et_al.ipynb`
+**Primary Jupyter notebook:** `ag_merge_code_trolley_et_al.ipynb`
 
-This Jupyter notebook:
-- Downloads/loads CDOM data from paired Cary-Ultrapath measurements
+- Downloads (From SeaBASS) or loads (from .pkl) CDOM data for paired Cary-Ultrapath measurements
 - Implements merge approaches (value threshold and percent difference methods, as described in the manuscript)
 - Generates all figures from the manuscript
 
@@ -30,13 +31,13 @@ This Jupyter notebook:
 
 ## Data Access Options
 
-The CDOM data are available through 2 methods
+The CDOM data are available through 2 methods:
 
 ### Method 1:
 
-The first data access method uses the provided NASA SeaBASS links along with your systems earthdata credentials saved in your .netrc file to directly download all relevant cdom files from SeaBASS automatically. This is the preferred method since you have the full files available to reference, but this approach is less beginner friendly as it requires you to have set up earthdata .netrc credentials
+The first data access method uses the provided NASA SeaBASS links along with your systems earthdata credentials saved in your .netrc file to directly download all relevant cdom files from SeaBASS automatically. This is the preferred method since you have the full files available to reference, but this approach is less beginner friendly as it requires you to have set up earthdata .netrc credentials.
 
-#### Optional: NASA Earthdata Credentials
+#### Optional: NASA Earthdata Credentials:
 For direct data download from SeaBASS, configure your `.netrc` file with Earthdata credentials. See [NASA Earthdata Login Setup](https://urs.earthdata.nasa.gov/documentation/for_users/data_access/create_net_rc_file).
 
 

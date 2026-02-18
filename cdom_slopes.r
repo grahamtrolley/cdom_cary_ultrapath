@@ -1,4 +1,3 @@
-
 # Script to calculate CDOM spectral slope using exponentia fit from 
 # the R "cdom" package
 #https://github.com/PMassicotte/cdom
@@ -25,13 +24,14 @@ df <- pd$read_pickle("cary_data_only.pkl")
 
 # Convert to R data frame if needed
 df_r <- py_to_r(df)
-#df_r <- py_to_r(pd$read_pickle("cary_ultrapath_paired_measurements.pkl"))
-#df_r <- as.data.frame(df_r, stringsAsFactors = FALSE)
+
 
 rowlen = length(df_r)
 
+
 # Set up s_275_295 log fit linear function, by taking relevant code from slope_ratio.R
-# function in the CDOM R package, https://github.com/PMassicotte/cdom
+# function in the CDOM R package, https://github.com/PMassicotte/cdom. not used 
+# for final analysis
 
 # s_275_295 <- function(x, y) {
 #   sf <- splinefun(x, y)
@@ -58,11 +58,7 @@ for (i in 0:rowlen) {
     error = function(e) NA
   )
 
-  #S_list <- append(S_list, S)
-
   print(S)
-  #print(s_275_295(x,y))
-  #S_list <- append(S_list, -s_275_295(x,y))
   S_list <- append(S_list, S)
 }
 S_list = unlist(S_list)
